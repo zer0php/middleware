@@ -1,0 +1,7 @@
+.idea/
+vendor/
+coverage/
+clover.xml
+infection-log.txt
+.DS_Store
+.DS_Store?

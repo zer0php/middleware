@@ -1,0 +1,35 @@
+{
+    "name": "zer0php/middleware",
+    "description": "Middleware Library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohos Tamás",
+            "email": "tomi@mohos.name"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Zero\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    },
+    "require": {
+        "php": ">= 7.1",
+        "psr/http-server-middleware": "^1.0",
+        "infection/infection": "^0.10.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3",
+        "php-coveralls/php-coveralls": "^2.1"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox --coverage-html coverage --coverage-clover clover.xml",
+        "test-docker": "docker run -v `PWD`:/opt/project zerosuxx/php-dev:latest composer test"
+    }
+}
