@@ -14,3 +14,6 @@ tst: ## run tests
 
 tst-docker: ## run tests in docker
 	composer test-docker
+
+ctest: ## run tests in docker
+	php -r "\$$s = json_decode(file_get_contents('composer.json'))->scripts; echo \$$s->test.' && '.\$$s->infection;" | bash
