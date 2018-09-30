@@ -41,7 +41,7 @@ class MiddlewarePipe implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if(!$this->queue->isEmpty()) {
+        if (!$this->queue->isEmpty()) {
             return $this->shiftMiddleware()->process($request, $this);
         }
         throw new MissingResponseException('Last middleware executed did not return a response!');
@@ -50,7 +50,8 @@ class MiddlewarePipe implements RequestHandlerInterface
     /**
      * @return MiddlewareInterface
      */
-    private function shiftMiddleware(): MiddlewareInterface {
+    private function shiftMiddleware(): MiddlewareInterface
+    {
         return $this->queue->shift();
     }
 }
