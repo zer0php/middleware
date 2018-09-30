@@ -12,6 +12,15 @@ use Zero\Middleware\Pipe\MiddlewarePipe;
 
 class MiddlewarePipeTest extends TestCase
 {
+    /**
+     * @var MiddlewarePipe
+     */
+    private $pipe;
+
+    protected function setUp()
+    {
+        $this->pipe = new MiddlewarePipe();
+    }
 
     /**
      * @test
@@ -19,9 +28,9 @@ class MiddlewarePipeTest extends TestCase
     public function handle_WithoutGivenMiddlewares_ThrowsException()
     {
         $this->expectException(MissingResponseException::class);
-        $pipe = new MiddlewarePipe();
+
         $requestMock = $this->createMock(ServerRequestInterface::class);
-        $pipe->handle($requestMock);
+        $this->pipe->handle($requestMock);
     }
 
     /**
@@ -29,7 +38,6 @@ class MiddlewarePipeTest extends TestCase
      */
     public function handle_GivenMiddlewares_InvokeMiddlewaresProcessMethod()
     {
-        $pipe = new MiddlewarePipe();
         $requestMock = $this->createMock(ServerRequestInterface::class);
         $responseMock = $this->createMock(ResponseInterface::class);
 
@@ -37,8 +45,8 @@ class MiddlewarePipeTest extends TestCase
         $middlewareMock
             ->expects($this->once())
             ->method('process')
-            ->with($requestMock, $pipe)
-            ->willReturnCallback(function(ServerRequestInterface $requestMock, RequestHandlerInterface $handler) {
+            ->with($requestMock, $this->pipe)
+            ->willReturnCallback(function (ServerRequestInterface $requestMock, RequestHandlerInterface $handler) {
                 return $handler->handle($requestMock);
             });
 
@@ -46,12 +54,12 @@ class MiddlewarePipeTest extends TestCase
         $secondMiddlewareMock
             ->expects($this->once())
             ->method('process')
-            ->with($requestMock, $pipe)
+            ->with($requestMock, $this->pipe)
             ->willReturn($responseMock);
 
-        $pipe->push($middlewareMock);
-        $pipe->push($secondMiddlewareMock);
-        $response = $pipe->handle($requestMock);
+        $this->pipe->push($middlewareMock);
+        $this->pipe->push($secondMiddlewareMock);
+        $response = $this->pipe->handle($requestMock);
         $this->assertSame($response, $responseMock);
     }
 
