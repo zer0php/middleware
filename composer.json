@@ -32,7 +32,11 @@
     "scripts": {
         "test": "vendor/bin/phpunit --testdox --coverage-html coverage --coverage-clover clover.xml",
         "test-docker": "docker run -v `PWD`:/opt/project zerosuxx/php-dev:latest composer test",
-        "infection": "vendor/bin/infection",
-        "infection-docker": "docker run -v `PWD`:/opt/project zerosuxx/php-dev:latest composer infection"
+        "infection": "vendor/bin/infection -s",
+        "infection-docker": "docker run -v `PWD`:/opt/project zerosuxx/php-dev:latest composer infection",
+        "tests": [
+            "@test",
+            "@infection"
+        ]
     }
 }
