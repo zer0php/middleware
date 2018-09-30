@@ -63,7 +63,8 @@ class ArgumentParserMiddlewareTest extends TestCase
                 'v' => '',
                 'file' => 'test-file.php',
                 'dir' => 'test dir/',
-                'output-dir' => 'output_dir'
+                'output-dir' => 'output_dir',
+                'equals-sign-test' => 'a=a'
             ])
             ->willReturn($requestMock);
         $requestMock
@@ -80,6 +81,7 @@ class ArgumentParserMiddlewareTest extends TestCase
                     '--dir',
                     'test dir/',
                     '--output-dir="output_dir"',
+                    '--equals-sign-test="a=a"',
                 ]
             ]);
         $handlerMock = $this->createMock(RequestHandlerInterface::class);
