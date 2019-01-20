@@ -11,12 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Zero\\": "src/"
+            "Zero\\Middleware\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\": "test/"
+            "ZeroTest\\": "test/"
         }
     },
     "require": {

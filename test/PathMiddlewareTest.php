@@ -51,6 +51,25 @@ class PathMiddlewareTest extends TestCase
         $middleware = new PathMiddleware('/test', $middlewareMock);
         $middleware->process($requestMock, $handlerMock);
     }
+    
+    /**
+     * @test
+     */
+    public function process_GivenTestPathAndMiddlewareWithOtherRequestPath_DelegateMiddleware()
+    {
+        $requestMock = $this->getRequestMock('/test/path');
+        $handlerMock = $this->createMock(RequestHandlerInterface::class);
+        $responseMock = $this->createMock(ResponseInterface::class);
+        $middlewareMock = $this->createMock(MiddlewareInterface::class);
+        $middlewareMock
+            ->expects($this->once())
+            ->method('process')
+            ->with($requestMock, $handlerMock)
+            ->willReturn($responseMock);
+
+        $middleware = new PathMiddleware('/test', $middlewareMock);
+        $middleware->process($requestMock, $handlerMock);
+    }
 
     private function getRequestMock($path)
     {
